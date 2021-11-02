@@ -11,15 +11,15 @@ discordClient.login(process.env.TOKEN || "");
 
 discordClient.on("ready", async () => {
   console.log("eggy kibun");
-  await discordClient.sendMessage(MESSAGES.UPDATE, DiscordClient.CHANNELS.CHANGELOG);
+  await discordClient.sendMessage(MESSAGES.UPDATE, DiscordClient.CHANNEL_IDS.CHANGELOG);
 
   //NYT Crossword updates at 10PM EST on weekdays and 6PM EST on weekends
   Cron.startJob(CRON_INTERVALS.WEEKDAY, async () => {
-    await discordClient.sendMessage(MESSAGES.PUZZLE, DiscordClient.CHANNELS.MAIN);
+    await discordClient.sendMessage(MESSAGES.PUZZLE, DiscordClient.CHANNEL_IDS.MAIN);
   });
 
   Cron.startJob(CRON_INTERVALS.WEEKEND, async () => {
-    await discordClient.sendMessage(MESSAGES.PUZZLE, DiscordClient.CHANNELS.MAIN);
+    await discordClient.sendMessage(MESSAGES.PUZZLE, DiscordClient.CHANNEL_IDS.MAIN);
   });
 });
 

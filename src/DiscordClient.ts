@@ -7,7 +7,7 @@ export enum MESSAGES {
 }
 
 class DiscordClient extends Client {
-  static CHANNELS = {
+  static CHANNEL_IDS = {
     CHANGELOG: process.env.CHANGELOG_CHANNEL || "",
     MAIN: process.env.CHANNEL || "",
   };
@@ -16,14 +16,14 @@ class DiscordClient extends Client {
     super();
   }
 
-  sendMessage = async (message: MESSAGES, channelName: string) => {
+  sendMessage = async (message: MESSAGES, channelId: string) => {
     const hasValidChannels =
-      this.isValidChannel(DiscordClient.CHANNELS.CHANGELOG) && this.isValidChannel(DiscordClient.CHANNELS.MAIN);
-    const channelNameMatches =
-      channelName === DiscordClient.CHANNELS.CHANGELOG || channelName === DiscordClient.CHANNELS.MAIN;
+      this.isValidChannel(DiscordClient.CHANNEL_IDS.CHANGELOG) && this.isValidChannel(DiscordClient.CHANNEL_IDS.MAIN);
+    const channelIdMatches =
+      channelId === DiscordClient.CHANNEL_IDS.CHANGELOG || channelId === DiscordClient.CHANNEL_IDS.MAIN;
     if (hasValidChannels) {
-      if (channelNameMatches) {
-        const channel = await this.channels.fetch(channelName);
+      if (channelIdMatches) {
+        const channel = await this.channels.fetch(channelId);
         (channel as TextChannel)?.send(message);
       }
     }
@@ -33,9 +33,9 @@ class DiscordClient extends Client {
     return message.toLowerCase().trim();
   };
 
-  isValidChannel = (channelName: string): boolean => {
+  isValidChannel = (channelId: string): boolean => {
     // channel ids seem to always be 18 length
-    return channelName.length === 18;
+    return channelId.length === 18;
   };
 }
 

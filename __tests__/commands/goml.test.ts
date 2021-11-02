@@ -22,7 +22,7 @@ describe("Goml", () => {
       test("when a 'goml' message was not sent in the 'main' channel.", async () => {
         // I think the fact that I have to define `valueOf` here is a bug
         // or I'm just not understanding something about how `Partial` works here.
-        const channel: Partial<TextChannel> = { name: DiscordClient.CHANNELS.MAIN + "foo", valueOf: () => { return "why"; }};
+        const channel: Partial<TextChannel> = { name: DiscordClient.CHANNEL_IDS.MAIN + "foo", valueOf: () => { return "why"; }};
         await goml(discordClient, <TextChannel>channel);
         expect(sendMock).toBeCalledTimes(0);
       });
@@ -31,7 +31,7 @@ describe("Goml", () => {
     describe("should send a message", () => {
       test("when a 'goml' message was sent in the 'main' channel.", async () => {
         // Again more weirdness with `valueOf` and partial type definition here.
-        const channel: Partial<TextChannel> = { name: DiscordClient.CHANNELS.MAIN, valueOf: () => { return "why"; }};
+        const channel: Partial<TextChannel> = { name: DiscordClient.CHANNEL_IDS.MAIN, valueOf: () => { return "why"; }};
         await goml(discordClient, <TextChannel>channel);
         expect(sendMock).toBeCalledTimes(1);
       })
