@@ -1,4 +1,4 @@
-import { Client, TextChannel } from "discord.js";
+import { Client, TextChannel, Intents } from "discord.js";
 
 export enum MESSAGES {
   UPDATE = "Ya boy is back and better than ever\nFor change notes, ask <@677740656747216916>",
@@ -13,7 +13,14 @@ class DiscordClient extends Client {
   };
 
   constructor() {
-    super();
+    super({
+      intents: [
+        Intents.FLAGS.GUILDS,
+        Intents.FLAGS.GUILD_MEMBERS,
+        Intents.FLAGS.GUILD_MESSAGES,
+        Intents.FLAGS.MESSAGE_CONTENT,
+      ],
+    });
   }
 
   sendMessage = async (message: MESSAGES, channelId: string) => {

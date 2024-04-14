@@ -10,7 +10,6 @@ const discordClient = new DiscordClient();
 discordClient.login(process.env.TOKEN || "");
 
 discordClient.on("ready", async () => {
-  console.log("eggy kibun");
   await discordClient.sendMessage(MESSAGES.UPDATE, DiscordClient.CHANNEL_IDS.CHANGELOG);
 
   //NYT Crossword updates at 10PM EST on weekdays and 6PM EST on weekends
@@ -23,7 +22,7 @@ discordClient.on("ready", async () => {
   });
 });
 
-discordClient.on("message", async ({content, channel}: Message) => {
+discordClient.on("message", async ({ content, channel }: Message) => {
   const parsedMessage = discordClient.parseMessage(content);
 
   if (parsedMessage === "goml" || parsedMessage === "#goml") {
