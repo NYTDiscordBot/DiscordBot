@@ -28,11 +28,9 @@ class DiscordClient extends Client {
       this.isValidChannel(DiscordClient.CHANNEL_IDS.CHANGELOG) && this.isValidChannel(DiscordClient.CHANNEL_IDS.MAIN);
     const channelIdMatches =
       channelId === DiscordClient.CHANNEL_IDS.CHANGELOG || channelId === DiscordClient.CHANNEL_IDS.MAIN;
-    if (hasValidChannels) {
-      if (channelIdMatches) {
-        const channel = await this.channels.fetch(channelId);
-        (channel as TextChannel)?.send(message);
-      }
+    if (hasValidChannels && channelIdMatches) {
+      const channel = await this.channels.fetch(channelId);
+      (channel as TextChannel)?.send(message);
     }
   };
 
