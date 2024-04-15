@@ -1,4 +1,4 @@
-import { Client, TextChannel } from "discord.js";
+import { Client, TextChannel, Intents } from "discord.js";
 
 export enum MESSAGES {
   UPDATE = "Ya boy is back and better than ever\nFor change notes, ask <@677740656747216916>",
@@ -13,7 +13,14 @@ class DiscordClient extends Client {
   };
 
   constructor() {
-    super();
+    super({
+      intents: [
+        Intents.FLAGS.GUILDS,
+        Intents.FLAGS.GUILD_MEMBERS,
+        Intents.FLAGS.GUILD_MESSAGES,
+        Intents.FLAGS.MESSAGE_CONTENT,
+      ],
+    });
   }
 
   sendMessage = async (message: MESSAGES, channelId: string) => {
@@ -21,11 +28,9 @@ class DiscordClient extends Client {
       this.isValidChannel(DiscordClient.CHANNEL_IDS.CHANGELOG) && this.isValidChannel(DiscordClient.CHANNEL_IDS.MAIN);
     const channelIdMatches =
       channelId === DiscordClient.CHANNEL_IDS.CHANGELOG || channelId === DiscordClient.CHANNEL_IDS.MAIN;
-    if (hasValidChannels) {
-      if (channelIdMatches) {
-        const channel = await this.channels.fetch(channelId);
-        (channel as TextChannel)?.send(message);
-      }
+    if (hasValidChannels && channelIdMatches) {
+      const channel = await this.channels.fetch(channelId);
+      (channel as TextChannel)?.send(message);
     }
   };
 
