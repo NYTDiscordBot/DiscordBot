@@ -11,6 +11,7 @@ const discordClient = new DiscordClient();
 discordClient.login(process.env.TOKEN || "");
 
 discordClient.on("ready", async () => {
+
   try {
     await discordClient.sendMessage(MESSAGES.UPDATE, DiscordClient.CHANNEL_IDS.CHANGELOG);
   } catch (e: unknown) {
@@ -18,6 +19,7 @@ discordClient.on("ready", async () => {
     console.log("log: Cannot send update message");
     console.log("error: ", error);
   }
+
 
   //NYT Crossword updates at 10PM EST on weekdays and 6PM EST on weekends
   Cron.startJob(CRON_INTERVALS.WEEKDAY, async () => {
