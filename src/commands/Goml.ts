@@ -1,8 +1,11 @@
-import { DMChannel, NewsChannel, TextChannel } from "discord.js";
+import { TextBasedChannel } from "discord.js";
 import DiscordClient, { MESSAGES } from "../DiscordClient";
 
-async function goml(client: DiscordClient, channel: DMChannel | TextChannel | NewsChannel): Promise<void> {
-  if (channel instanceof DMChannel || channel.id !== DiscordClient.CHANNEL_IDS.MAIN) return;
+async function goml(client: DiscordClient, channel: TextBasedChannel): Promise<void> {
+  if (channel.id !== DiscordClient.CHANNEL_IDS.MAIN) {
+    console.log("channel isn't in our list of valid channels so skipping");
+    return;
+  }
 
   await client.sendMessage(MESSAGES.GOML, DiscordClient.CHANNEL_IDS.MAIN);
 }

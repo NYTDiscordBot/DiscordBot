@@ -8,7 +8,7 @@ describe("DiscordClient", () => {
     jest.resetAllMocks();
     discordClient = new DiscordClient();
     // @ts-ignore
-    discordClient.channels.cache.get = jest.fn((channelName) => {
+    discordClient.channels.cache.get = jest.fn(() => {
       return {
         send: sendMock,
       };
