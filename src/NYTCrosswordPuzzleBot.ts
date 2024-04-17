@@ -3,7 +3,7 @@ dotenv.config();
 import DiscordClient, { MESSAGES } from "./DiscordClient";
 import Cron, { CRON_INTERVALS } from "./Cron";
 import goml from "./commands/Goml";
-import { Message } from "discord.js";
+import { ChannelType, Message } from "discord.js";
 import { getErrorMessage } from "./utils";
 
 const discordClient = new DiscordClient();
@@ -43,7 +43,7 @@ discordClient.on("ready", async () => {
 
 discordClient.on("messageCreate", async (message: Message) => {
   const parsedMessage = discordClient.parseMessage(message.content);
-  if (parsedMessage === "goml" && message.channel.isText()) {
+  if (parsedMessage === "goml" && message.channel.type === ChannelType.GuildText) {
     try {
       await goml(discordClient, message.channel);
     } catch (e: unknown) {
